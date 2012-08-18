@@ -1,8 +1,5 @@
 <?php
-namespace Everyman\Plumber\Pipe;
-
-use Everyman\Plumber\Pipe\FilterPipe,
-    PipeTestCase;
+use Everyman\Plumber\Pipe\FilterPipe;
 
 class FilterPipeTest extends PipeTestCase
 {
