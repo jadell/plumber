@@ -10,7 +10,7 @@ class TransformPipeTest extends PipeTestCase
 	{
 		$init = array('zero', 'one', 'two', 'three');
 
-		$pipe = new IdentityPipe();
+		$pipe = new TransformPipe();
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($init, $pipe);

@@ -6,6 +6,17 @@ use Everyman\Plumber\Pipe\FilterPipe,
 
 class FilterPipeTest extends PipeTestCase
 {
+	public function testNoCallback_ReturnsArrayWithoutFalseyValues()
+	{
+		$init = array(true, false, null, '', 0, 'foo', 'zero'=>1, 'three'=>0);
+		$expected = array(0 => true, 5 => 'foo', 'zero'=>1);
+
+		$pipe = new FilterPipe();
+		$pipe->setStarts(new \ArrayIterator($init));
+
+		self::assertIteratorEquals($expected, $pipe);
+	}
+
 	public function testReturnsFilteredArray()
 	{
 		$init = array('zero'=>3, 'one'=>2, 'two'=>1, 'three'=>0);

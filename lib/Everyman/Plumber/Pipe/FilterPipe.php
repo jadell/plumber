@@ -6,6 +6,8 @@ use Everyman\Plumber\Pipe,
 
 /**
  * Pipe that returns only elements in the starting Iterator that match the filter callback
+ *
+ * If no callback is given, only truthy values will be returned.
  */
 class FilterPipe extends Pipe
 {
@@ -21,8 +23,14 @@ class FilterPipe extends Pipe
 	 * @param callable $filter    callback with signature: function ($value, $key)
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($filter)
+	public function __construct($filter=null)
 	{
+		if (!$filter) {
+			$filter = function ($value, $key) {
+				return (boolean)$value;
+			};
+		}
+
 		if (!is_callable($filter)) {
 			throw new InvalidArgumentException('FilterPipe must be given a callable argument.');
 		}

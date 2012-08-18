@@ -2,7 +2,7 @@
 namespace Everyman\Plumber;
 
 use Everyman\Plumber\Pipe,
-    Everyman\Plumber\Pipe\IdentityPipe,
+    Everyman\Plumber\Pipe\TransformPipe,
     Iterator;
 
 /**
@@ -23,7 +23,7 @@ class Pipeline extends Pipe
 	{
 		$pipeList = func_get_args();
 		if (count($pipeList) < 1) {
-			$pipeList = array(new IdentityPipe());
+			$pipeList = array(new TransformPipe());
 		}
 
 		foreach ($pipeList as $pipe) {
