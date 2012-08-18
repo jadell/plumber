@@ -46,7 +46,6 @@ class TransformPipe extends Pipe
 	 */
 	public function current()
 	{
-		$transform = $this->transform;
-		return $transform(parent::current(), parent::key());
+		return call_user_func($this->transform, parent::current(), parent::key());
 	}
 }

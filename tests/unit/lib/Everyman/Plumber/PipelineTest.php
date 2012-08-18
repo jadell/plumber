@@ -18,6 +18,20 @@ class PipelineTest extends PipeTestCase
 		self::assertIteratorEquals(array(1=>'ONE', 2=>'TWO'), $pipeline);
 	}
 
+	public function testPipeline_PipesCanBeAddedAfterConstruction()
+	{
+		$init = array('zero', 'one', 'two', 'three');
+
+		$filter = new FilterPipe(function ($value) { return strlen($value) < 4; });
+		$transform = new TransformPipe(function ($value) { return strtoupper($value); });
+
+		$pipeline = new Pipeline($filter);
+		$pipeline->appendPipe($transform);
+		$pipeline->setStarts(new \ArrayIterator($init));
+
+		self::assertIteratorEquals(array(1=>'ONE', 2=>'TWO'), $pipeline);
+	}
+
 	public function testPipelinesAreComposable()
 	{
 		$init = array('zero', 'one', 'two', 'three');

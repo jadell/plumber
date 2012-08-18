@@ -65,8 +65,7 @@ class FilterPipe extends Pipe
 	 */
 	protected function advance()
 	{
-		$filter = $this->filter;
-		while (parent::valid() && !$filter(parent::current(), parent::key())) {
+		while (parent::valid() && !call_user_func($this->filter, parent::current(), parent::key())) {
 			parent::next();
 		}
 	}
