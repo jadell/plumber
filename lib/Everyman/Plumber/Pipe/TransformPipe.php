@@ -6,6 +6,9 @@ use Everyman\Plumber\Pipe,
 
 /**
  * Pipe that runs every element of the starting Iterator through a transformation callback
+ *
+ * If no callback is given, the pipe acts like an Identity pipe, returning exactly the
+ * values in the Iterator that was given to it.
  */
 class TransformPipe extends Pipe
 {
@@ -21,8 +24,14 @@ class TransformPipe extends Pipe
 	 * @param callable $transform    callback with signature: function ($value, $key)
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($transform)
+	public function __construct($transform=null)
 	{
+		if (!$transform) {
+			$transform = function ($value, $key) {
+				return $value;
+			};
+		}
+
 		if (!is_callable($transform)) {
 			throw new InvalidArgumentException('TransformPipe must be given a callable argument.');
 		}
