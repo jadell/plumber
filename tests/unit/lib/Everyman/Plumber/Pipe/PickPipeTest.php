@@ -1,7 +1,7 @@
 <?php
-use Everyman\Plumber\Builtin\Pick;
+use Everyman\Plumber\Pipe\PickPipe;
 
-class PickTest extends PipeTestCase
+class PickPipeTest extends PipeTestCase
 {
 	public function testScalarElements_ReturnsNulls()
 	{
@@ -10,7 +10,7 @@ class PickTest extends PipeTestCase
 		$pickKey = 'qux';
 		$expected = array(null, null, null);
 
-		$pipe = new Pick($pickKey);
+		$pipe = new PickPipe($pickKey);
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);
@@ -27,7 +27,7 @@ class PickTest extends PipeTestCase
 		$pickKey = 'bar';
 		$expected = array('bar', 'baz', 'foo');
 
-		$pipe = new Pick($pickKey);
+		$pipe = new PickPipe($pickKey);
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);
@@ -48,7 +48,7 @@ class PickTest extends PipeTestCase
 			array('bar'=>'foo', 'baz'=>'bar'),
 		);
 
-		$pipe = new Pick($pickKey);
+		$pipe = new PickPipe($pickKey);
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);
@@ -65,7 +65,7 @@ class PickTest extends PipeTestCase
 		$pickKey = 'bar';
 		$expected = array('bar', 'baz', 'foo');
 
-		$pipe = new Pick($pickKey);
+		$pipe = new PickPipe($pickKey);
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);
@@ -86,7 +86,7 @@ class PickTest extends PipeTestCase
 			array('bar'=>'foo', 'baz'=>'bar'),
 		);
 
-		$pipe = new Pick($pickKey);
+		$pipe = new PickPipe($pickKey);
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);

@@ -1,12 +1,12 @@
 <?php
-namespace Everyman\Plumber\Builtin;
+namespace Everyman\Plumber\Pipe;
 
 use Everyman\Plumber\Pipe\FilterPipe;
 
 /**
  * Pipe that returns only elements that have not yet been processed
  */
-class Unique extends FilterPipe
+class UniquePipe extends FilterPipe
 {
 	protected $seen = array();
 

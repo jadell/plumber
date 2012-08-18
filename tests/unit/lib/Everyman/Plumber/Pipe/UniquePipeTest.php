@@ -1,13 +1,13 @@
 <?php
-use Everyman\Plumber\Builtin\Unique;
+use Everyman\Plumber\Pipe\UniquePipe;
 
-class UniqueTest extends PipeTestCase
+class UniquePipeTest extends PipeTestCase
 {
 	public function testAllUniques_ReturnsAllElements()
 	{
 		$init = array('foo', 'bar', 'baz', 'qux');
 
-		$pipe = new Unique();
+		$pipe = new UniquePipe();
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($init, $pipe);
@@ -18,7 +18,7 @@ class UniqueTest extends PipeTestCase
 		$init = array('foo', 'bar', 'foo', 'baz', 'qux', 'qux');
 		$expected = array(0=>'foo', 1=>'bar', 3=>'baz', 4=>'qux');
 
-		$pipe = new Unique();
+		$pipe = new UniquePipe();
 		$pipe->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($expected, $pipe);

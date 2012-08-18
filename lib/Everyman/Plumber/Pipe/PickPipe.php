@@ -1,12 +1,12 @@
 <?php
-namespace Everyman\Plumber\Builtin;
+namespace Everyman\Plumber\Pipe;
 
 use Everyman\Plumber\Pipe\TransformPipe;
 
 /**
  * Pipe that returns a value or array of values picked out of the input array or object
  */
-class Pick extends TransformPipe
+class PickPipe extends TransformPipe
 {
 	protected $singlePick = false;
 	protected $pickKey;
