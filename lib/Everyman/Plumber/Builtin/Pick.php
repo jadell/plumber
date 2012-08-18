@@ -24,21 +24,13 @@ class Pick extends TransformPipe
 	public function pick($value, $key)
 	{
 		if (is_object($value)) {
-			return $this->handleObject($value);
-		} else if (is_array($value)) {
-			return $this->handleArray($value);
+			$value = (array)$value;
 		}
-		return null;
-	}
 
-	protected function handleObject($value)
-	{
-		$picked = $this->handleArray((array)$value);
-		return $picked;
-	}
+		if (!is_array($value)) {
+			return null;
+		}
 
-	protected function handleArray($value)
-	{
 		if ($this->singlePick) {
 			return $value[$this->pickKey];
 		}
