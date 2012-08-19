@@ -23,4 +23,9 @@ class UniquePipe extends FilterPipe
 		$this->seen[] = $value;
 		return true;
 	}
+
+	protected function reset()
+	{
+		$this->seen = array();
+	}
 }

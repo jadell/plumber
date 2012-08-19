@@ -33,4 +33,10 @@ class SlicePipe extends FilterPipe
 		}
 		return false;
 	}
+
+	protected function reset()
+	{
+		$this->at = 0;
+		$this->emitted = 0;
+	}
 }

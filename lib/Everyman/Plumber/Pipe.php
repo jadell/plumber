@@ -29,7 +29,17 @@ abstract class Pipe implements Iterator
 	 */
 	public function rewind()
 	{
+		$this->reset();
 		$this->starts->rewind();
+	}
+
+	/**
+	 * Reset any internal state the pipe has
+	 *
+	 * Occurs immediately before a rewind.
+	 */
+	protected function reset()
+	{
 	}
 
 	/**
