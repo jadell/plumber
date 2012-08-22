@@ -3,6 +3,8 @@ namespace Everyman\Plumber;
 
 use Everyman\Plumber\Pipe,
     Everyman\Plumber\Pipe\TransformPipe,
+    ReflectionClass,
+    ArrayIterator,
     Iterator;
 
 /**
@@ -13,22 +15,35 @@ class Pipeline extends Pipe
 	protected $end;
 
 	/**
-	 * Set multiple pipes
+	 * Create the pipeline and set up the head of the pipeline
 	 *
-	 * @param Pipe $pipe1
-	 * ...
-	 * @param Pipe $pipeN
+	 * @param mixed $starts an Iterator or array
 	 */
-	public function __construct()
+	public function __construct($starts=null)
 	{
-		$pipeList = func_get_args();
-		if (count($pipeList) < 1) {
-			$pipeList = array(new TransformPipe());
-		}
+		$this->appendPipe(new TransformPipe());
 
-		foreach ($pipeList as $pipe) {
-			$this->appendPipe($pipe);
+		if (is_array($starts)) {
+			$starts = new ArrayIterator($starts);
 		}
+		if ($starts) {
+			$this->setStarts($starts);
+		}
+	}
+
+	/**
+	 * Automatically append pipes by chaining calls
+	 */
+	public function __call($method, $args)
+	{
+		$fqcName = '\Everyman\Plumber\Pipe\\'.ucfirst($method).'Pipe';
+		if (!isset($this->refl[$fqcName])) {
+			$this->refl[$fqcName] = new ReflectionClass($fqcName);
+		}
+		$refl = $this->refl[$fqcName];
+		$pipe = $refl->newInstanceArgs($args);
+		$this->appendPipe($pipe);
+		return $this;
 	}
 
 	/**
@@ -37,6 +52,7 @@ class Pipeline extends Pipe
 	 * Appended pipes are processed after any pipes before them.
 	 *
 	 * @param Pipe $pipe
+	 * @return Pipeline
 	 */
 	public function appendPipe(Pipe $pipe)
 	{
@@ -47,6 +63,7 @@ class Pipeline extends Pipe
 			$pipe->setStarts($this->starts);
 			$this->starts = $pipe;
 		}
+		return $this;
 	}
 
 	/**

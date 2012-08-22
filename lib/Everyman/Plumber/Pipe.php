@@ -25,6 +25,20 @@ abstract class Pipe implements Iterator
 	}
 
 	/**
+	 * Loop through the entire iterator and return the result
+	 *
+	 * @return array
+	 */
+	public function drain()
+	{
+		$result = array();
+		foreach ($this as $key => $value) {
+			$result[$key] = $value;
+		}
+		return $result;
+	}
+
+	/**
 	 * Rewind the starts iterator
 	 */
 	public function rewind()
