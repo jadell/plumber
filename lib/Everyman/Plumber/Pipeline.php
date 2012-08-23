@@ -2,6 +2,7 @@
 namespace Everyman\Plumber;
 
 use Everyman\Plumber\Pipe,
+    Everyman\Plumber\Helper,
     Everyman\Plumber\Pipe\TransformPipe,
     ReflectionClass,
     ArrayIterator,
@@ -36,11 +37,7 @@ class Pipeline extends Pipe
 	 */
 	public function __call($method, $args)
 	{
-		$fqcName = '\Everyman\Plumber\Pipe\\'.ucfirst($method).'Pipe';
-		if (!isset($this->refl[$fqcName])) {
-			$this->refl[$fqcName] = new ReflectionClass($fqcName);
-		}
-		$refl = $this->refl[$fqcName];
+		$refl = Helper::getPipeHandler($method);
 		$pipe = $refl->newInstanceArgs($args);
 		$this->appendPipe($pipe);
 		return $this;
