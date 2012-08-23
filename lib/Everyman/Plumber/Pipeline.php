@@ -23,13 +23,24 @@ class Pipeline extends Pipe
 	public function __construct($starts=null)
 	{
 		$this->appendPipe(new TransformPipe());
+		$this($starts);
+	}
 
+	/**
+	 * Provides an abbreviated syntax for setting the internal Iterator
+	 *
+	 * @param mixed $starts an Iterator or array
+	 * @return Pipeline
+	 */
+	public function __invoke($starts=null)
+	{
 		if (is_array($starts)) {
 			$starts = new ArrayIterator($starts);
 		}
 		if ($starts) {
 			$this->setStarts($starts);
 		}
+		return $this;
 	}
 
 	/**

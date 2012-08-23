@@ -18,7 +18,7 @@ class PipelineTest extends PipeTestCase
 	{
 		$init = array('zero', 'one', 'two', 'three');
 
-		$pipeline = new Pipeline(new \ArrayIterator($init));
+		$pipeline = new Pipeline();
 		$pipeline->setStarts(new \ArrayIterator($init));
 
 		self::assertIteratorEquals($init, $pipeline);
@@ -31,6 +31,24 @@ class PipelineTest extends PipeTestCase
 		$pipeline = new Pipeline($init);
 
 		self::assertIteratorEquals($init, $pipeline);
+	}
+
+	public function testPipeline_InvokedWithIterator_ActsAsIdentityPipe()
+	{
+		$init = array('zero', 'one', 'two', 'three');
+
+		$pipeline = new Pipeline();
+
+		self::assertIteratorEquals($init, $pipeline(new \ArrayIterator($init)));
+	}
+
+	public function testPipeline_InvokedWithArray_ActsAsIdentityPipe()
+	{
+		$init = array('zero', 'one', 'two', 'three');
+
+		$pipeline = new Pipeline();
+
+		self::assertIteratorEquals($init, $pipeline($init));
 	}
 
 	public function testPipeline_AppendPipes_ProcessesInOrder()
