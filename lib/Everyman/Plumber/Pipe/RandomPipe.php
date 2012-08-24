@@ -16,7 +16,7 @@ class RandomPipe extends FilterPipe
 	{
 		if (!$random) {
 			$random = function () {
-				return mt_rand(1,100);
+				return mt_rand(0,99);
 			};
 		}
 

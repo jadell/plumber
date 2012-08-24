@@ -117,7 +117,7 @@ If the second parameter is left off, all values after the offset are returned:
     // Output: bar baz quz lorem ipsum
 
 #### Random
-_random_ pipes emit values randomly based on a threshold. The threshold should be between 1 and 100, and represents the chance in 100 that a value will be emitted:
+_random_ pipes emit values randomly based on a threshold. The threshold should be between 0 and 100, and represents the chance in 100 that a value will be emitted:
 
     $pipeline->random(40);
     foreach ($pipeline(array('foo', 'bar', 'baz', 'qux', 'lorem', 'ipsum')) as $value) {

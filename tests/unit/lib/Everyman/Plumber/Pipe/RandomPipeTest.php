@@ -19,4 +19,25 @@ class RandomPipeTest extends PipeTestCase
 
 		self::assertIteratorEquals($expected, $pipe);
 	}
+
+	public function testZeroThreshold_NoValuesEmitted()
+	{
+		$init = array('foo', 'bar', 'baz', 'qux', 'lorem', 'ipsum');
+		$expected = array();
+
+		$pipe = new RandomPipe(0);
+		$pipe->setStarts(new \ArrayIterator($init));
+
+		self::assertIteratorEquals($expected, $pipe);
+	}
+
+	public function testHundredPercentThreshold_AllValuesEmitted()
+	{
+		$init = array('foo', 'bar', 'baz', 'qux', 'lorem', 'ipsum');
+
+		$pipe = new RandomPipe(100);
+		$pipe->setStarts(new \ArrayIterator($init));
+
+		self::assertIteratorEquals($init, $pipe);
+	}
 }

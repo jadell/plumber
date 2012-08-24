@@ -4,7 +4,6 @@ namespace Everyman\Plumber;
 use Everyman\Plumber\Pipe,
     Everyman\Plumber\Helper,
     Everyman\Plumber\Pipe\TransformPipe,
-    ReflectionClass,
     ArrayIterator,
     Iterator;
 
