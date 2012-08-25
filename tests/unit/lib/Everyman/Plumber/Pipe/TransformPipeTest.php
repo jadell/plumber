@@ -8,9 +8,8 @@ class TransformPipeTest extends PipeTestCase
 		$init = array('zero', 'one', 'two', 'three');
 
 		$pipe = new TransformPipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($init, $pipe);
+		self::assertIteratorEquals($init, $pipe($init));
 	}
 
 	public function testNoTransformCallback_AssociativeArray_ReturnsIdentityArray()
@@ -18,9 +17,8 @@ class TransformPipeTest extends PipeTestCase
 		$init = array('zero'=>3, 'one'=>2, 'two'=>1, 'three'=>0);
 
 		$pipe = new TransformPipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($init, $pipe);
+		self::assertIteratorEquals($init, $pipe($init));
 	}
 
 	public function testTransformCallbackGiven_ReturnsTransformedArray()
@@ -31,9 +29,8 @@ class TransformPipeTest extends PipeTestCase
 		$pipe = new TransformPipe(function ($value, $key) {
 			return $key.$value;
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testNonCallable_ThrowsException()

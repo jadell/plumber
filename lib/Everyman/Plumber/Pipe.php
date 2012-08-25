@@ -1,7 +1,8 @@
 <?php
 namespace Everyman\Plumber;
 
-use Iterator;
+use Iterator,
+    ArrayIterator;
 
 /**
  * Base class for all pipes
@@ -13,6 +14,23 @@ abstract class Pipe implements Iterator
 	 * @var Iterator
 	 */
 	protected $starts;
+
+	/**
+	 * Provides an abbreviated syntax for setting the internal Iterator
+	 *
+	 * @param mixed $starts an Iterator or array
+	 * @return Pipeline
+	 */
+	public function __invoke($starts=null)
+	{
+		if (is_array($starts)) {
+			$starts = new ArrayIterator($starts);
+		}
+		if ($starts) {
+			$this->setStarts($starts);
+		}
+		return $this;
+	}
 
 	/**
 	 * Set the Iterator which generates the values to transform

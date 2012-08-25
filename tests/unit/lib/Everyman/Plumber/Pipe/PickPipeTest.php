@@ -11,9 +11,8 @@ class PickPipeTest extends PipeTestCase
 		$expected = array(null, null, null);
 
 		$pipe = new PickPipe($pickKey);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testArrayElements_ReturnsArrayOfSelectedValues()
@@ -28,9 +27,8 @@ class PickPipeTest extends PipeTestCase
 		$expected = array('bar', 'baz', 'foo');
 
 		$pipe = new PickPipe($pickKey);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testArrayElements_MultiplePickKeys_ReturnsArrayOfArraysOfSelectedValues()
@@ -49,9 +47,8 @@ class PickPipeTest extends PipeTestCase
 		);
 
 		$pipe = new PickPipe($pickKey);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testObjectElements_ReturnsArrayOfSelectedValues()
@@ -66,9 +63,8 @@ class PickPipeTest extends PipeTestCase
 		$expected = array('bar', 'baz', 'foo');
 
 		$pipe = new PickPipe($pickKey);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testObjectElements_MultiplePickKeys_ReturnsArrayOfArraysOfSelectedValues()
@@ -87,8 +83,7 @@ class PickPipeTest extends PipeTestCase
 		);
 
 		$pipe = new PickPipe($pickKey);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 }

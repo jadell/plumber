@@ -9,9 +9,8 @@ class FilterPipeTest extends PipeTestCase
 		$expected = array(0 => true, 5 => 'foo', 'zero'=>1);
 
 		$pipe = new FilterPipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testReturnsFilteredArray()
@@ -21,9 +20,8 @@ class FilterPipeTest extends PipeTestCase
 		$pipe = new FilterPipe(function ($value, $key) {
 			return ($value == 2 || $key == 'three');
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals(array('one'=>2, 'three'=>0), $pipe);
+		self::assertIteratorEquals(array('one'=>2, 'three'=>0), $pipe($init));
 	}
 
 	public function testAllMatch_ReturnsFilteredArray()
@@ -33,9 +31,8 @@ class FilterPipeTest extends PipeTestCase
 		$pipe = new FilterPipe(function ($value, $key) {
 			return true;
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($init, $pipe);
+		self::assertIteratorEquals($init, $pipe($init));
 	}
 
 	public function testNoneMatch_ReturnsFilteredArray()
@@ -45,9 +42,8 @@ class FilterPipeTest extends PipeTestCase
 		$pipe = new FilterPipe(function ($value, $key) {
 			return false;
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals(array(), $pipe);
+		self::assertIteratorEquals(array(), $pipe($init));
 	}
 
 	public function testFirstMatch_ReturnsFilteredArray()
@@ -57,9 +53,8 @@ class FilterPipeTest extends PipeTestCase
 		$pipe = new FilterPipe(function ($value, $key) {
 			return $key == 'zero';
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals(array('zero'=>3), $pipe);
+		self::assertIteratorEquals(array('zero'=>3), $pipe($init));
 	}
 
 	public function testLastMatch_ReturnsFilteredArray()
@@ -69,9 +64,8 @@ class FilterPipeTest extends PipeTestCase
 		$pipe = new FilterPipe(function ($value, $key) {
 			return $key == 'three';
 		});
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals(array('three'=>0), $pipe);
+		self::assertIteratorEquals(array('three'=>0), $pipe($init));
 	}
 
 	public function testNonCallable_ThrowsException()

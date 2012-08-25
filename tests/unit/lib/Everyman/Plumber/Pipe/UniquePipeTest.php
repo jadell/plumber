@@ -8,9 +8,8 @@ class UniquePipeTest extends PipeTestCase
 		$init = array('foo', 'bar', 'baz', 'qux');
 
 		$pipe = new UniquePipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($init, $pipe);
+		self::assertIteratorEquals($init, $pipe($init));
 	}
 
 	public function testSomeUniques_ReturnsUniqueElements()
@@ -19,9 +18,8 @@ class UniquePipeTest extends PipeTestCase
 		$expected = array(0=>'foo', 1=>'bar', 3=>'baz', 4=>'qux');
 
 		$pipe = new UniquePipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testIteratedMoreThanOnce_ReturnsUniqueElements()
@@ -30,9 +28,8 @@ class UniquePipeTest extends PipeTestCase
 		$expected = array(0=>'foo', 1=>'bar', 3=>'baz', 4=>'qux');
 
 		$pipe = new UniquePipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 		self::assertIteratorEquals($expected, $pipe);
 	}
 }

@@ -8,9 +8,8 @@ class SlicePipeTest extends PipeTestCase
 		$init = array('foo', 'bar', 'baz', 'qux', 'lorem', 'ipsum');
 
 		$pipe = new SlicePipe();
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($init, $pipe);
+		self::assertIteratorEquals($init, $pipe($init));
 	}
 
 	public function testOffsetGiven_ReturnsAllElementsFromOffsetToEnd()
@@ -19,9 +18,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array(2=>'baz', 3=>'qux', 4=>'lorem', 5=>'ipsum');
 
 		$pipe = new SlicePipe(2);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testIteratedMoreThanOnce_ReturnsAllElementsFromOffsetToEnd()
@@ -30,9 +28,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array(2=>'baz', 3=>'qux', 4=>'lorem', 5=>'ipsum');
 
 		$pipe = new SlicePipe(2);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 		self::assertIteratorEquals($expected, $pipe);
 	}
 
@@ -42,9 +39,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array('foo', 'bar', 'baz');
 
 		$pipe = new SlicePipe(0, 3);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testOffsetAndLengthGiven_ReturnsLengthNumberOfElementsFromOffset()
@@ -53,9 +49,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array(2=>'baz', 3=>'qux', 4=>'lorem');
 
 		$pipe = new SlicePipe(2, 3);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testOffsetGreaterThanSize_ReturnsNoElements()
@@ -64,9 +59,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array();
 
 		$pipe = new SlicePipe(count($init));
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testLengthGreaterThanSize_ReturnsAllElementsFromOffsetToEnd()
@@ -75,9 +69,8 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array(2=>'baz', 3=>'qux', 4=>'lorem', 5=>'ipsum');
 
 		$pipe = new SlicePipe(2, 5);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 
 	public function testAssociativeKeys_ReturnsElements()
@@ -86,8 +79,7 @@ class SlicePipeTest extends PipeTestCase
 		$expected = array('bar'=>'rab', 'baz'=>'zab');
 
 		$pipe = new SlicePipe(1, 2);
-		$pipe->setStarts(new \ArrayIterator($init));
 
-		self::assertIteratorEquals($expected, $pipe);
+		self::assertIteratorEquals($expected, $pipe($init));
 	}
 }
