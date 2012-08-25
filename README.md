@@ -144,4 +144,44 @@ A transformation function should take 2 parameters, the current value and key in
     }
     // Output: oof rab zab xuq merol muspi
 
+Custom Pipes
+------------
+It is possible to build your own pipe to perform custom logic. The pipe should extend one of the built-in pipes, typically _Everyman\Plumber\Pipe\TransformPipe_ or _Everyman\Plumber\Pipe\FilterPipe_. If you do not extend one of the built-in pipes, you must extend _Everyman\Plumber\Pipe_.
 
+    class MyCustomPipe extends Everyman\Plumber\Pipe\TransformPipe
+    {
+        public function __construct()
+        {
+            parent::__construct(function ($value, $key) use () {
+                // do custom logic
+                return $customValue;
+            });
+        }
+    }
+
+    $pipeline = new Everyman\Plumber\Pipeline();
+    $pipeline->appendPipe(new MyCustomPipe());
+
+It is also possible to register custom pipe classes so that they may be used with the fluent pipe interface:
+
+    Everyman\Plumber\Helper::registerPipe('custom', 'MyCustomPipe');
+
+    $pipeline = new Everyman\Plumber\Pipeline();
+    $pipeline->custom();
+
+Note that the name of the pipe does not have to match the class name. Also, the registered class name must be the fully-qualified class name.
+
+If multiple custome pipes are all under the same namespace and each pipe class name ends with "Pipe", the entire namespace can be registered:
+
+    namespace My\Project\Pipes;
+
+    class MyCustomPipe extends Everyman\Plumber\Pipe\TransformPipe { ... }
+
+    class AnotherPipe extends Everyman\Plumber\Pipe\TransformPipe { ... }
+
+    Everyman\Plumber\Helper::registerNamespace('My\Project\Pipes');
+
+    $pipeline = new Everyman\Plumber\Pipeline();
+    $pipeline->myCustom()->another();
+
+Note that when registering a namespace, the method called on the pipeline is the name of the class, lower camel-cased, and without the 'Pipe' suffix. If all pipes in the namespace have a suffix other than 'Pipe', that suffix can be passed as a second parameter to `registerNamespace`. The second parameter can be the empty string if there is a not a common suffix.
