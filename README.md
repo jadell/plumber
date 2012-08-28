@@ -144,6 +144,44 @@ A transformation function should take 2 parameters, the current value and key in
     }
     // Output: oof rab zab xuq merol muspi
 
+#### Pluck
+_pluck_ pipes emit a single value (or an array of values) taken from an array or object:
+
+    $pipeline->pluck('id');
+    $data = array(
+        array('id' => 123, 'foo' => 'bar'),
+        array('id' => 456, 'baz' => 'qux'),
+        array('lorem' => 'ipsum'),
+    );
+    foreach ($pipeline($data) as $key => $value) {
+        echo $key.':'.$value.' ';
+    }
+    // Output: 0:123 1:456 2:
+
+If an array of keys is given, the emitted value will be an array containing each key and the values for those keys. The values of any keys not found will be `null`.
+
+#### IfElse
+_ifElse_ pipes are used to emit a value if a certain condition is met, and a different value if the condition is not met:
+
+    $pipeline->ifElse(function ($value, $key) { return strlen($value) < 4; },
+        function ($value, $key) { return -1; },
+        function ($value, $key) { return strlen($value); }
+    );
+    foreach ($pipeline(array('zero', 'one', 'two', 'three', 'four', 'five', 'six')) as $value) {
+        echo $value.' ';
+    }
+    // Output: 4 -1 -1 5 4 4 -1
+
+If the third callback (the "else" callback) is omitted, then the value will be passed through "as-is" if the condition is not met:
+
+    $pipeline->ifElse(function ($value, $key) { return strlen($value) < 4; },
+        function ($value, $key) { return -1; }
+    );
+    foreach ($pipeline(array('zero', 'one', 'two', 'three', 'four', 'five', 'six')) as $value) {
+        echo $value.' ';
+    }
+    // Output: zero -1 -1 three four five -1
+
 Custom Pipes
 ------------
 It is possible to build your own pipe to perform custom logic. The pipe should extend one of the built-in pipes, typically _Everyman\Plumber\Pipe\TransformPipe_ or _Everyman\Plumber\Pipe\FilterPipe_. If you do not extend one of the built-in pipes, you must extend _Everyman\Plumber\Pipe_.
