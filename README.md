@@ -21,6 +21,17 @@ Usage
       echo $c;
     }
 
+Install
+-------
+[Composer](http://getcomposer.org/) is the recommended way to install Plumber. Add the following to your `composer.json`:
+
+    {
+        "require": {
+            "everyman/plumber": "dev-master"
+        }
+    }
+
+
 Purpose
 -------
 
