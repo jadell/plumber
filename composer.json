@@ -1,0 +1,16 @@
+{
+  "name": "everyman/plumber",
+  "type": "library",
+  "description": "A simple library for creating processing pipelines",
+  "keywords": ["plumber","pipe","pipeline","dataflow","iterator","lazy","fluent"],
+  "license": "MIT",
+  "authors": [
+    {"name": "Josh Adell", "email": "josh.adell@gmail.com", "homepage": "http://joshadell.com"}
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "autoload": {
+    "psr-0": {"Everyman\\Plumber":"lib/"}
+  }
+}
