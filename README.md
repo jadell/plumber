@@ -26,7 +26,7 @@ Purpose
 
 Often times, it is necessary to loop through a list, filter out unneeded values, and perform one or more transformations on the remaining values. A good example of this is reading and formatting records from a database:
 
-    $users = // code to retrieve user records from a database...
+    $users = // code to retrieve user records from a database as an array or Iterator...
 
     $names = array();
     foreach ($users as $user) {
